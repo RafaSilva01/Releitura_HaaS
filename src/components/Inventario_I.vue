@@ -1,0 +1,181 @@
+<template>
+    <div>
+        <v-container>
+            <v-banner outlined single-line>
+                <template>
+                    <v-card>
+                        <v-toolbar color="#000" dark flat>
+                            <template>
+                                <v-tabs v-model="tabs" centered>
+                                    <v-tab>
+                                        Inventario
+                                    </v-tab>
+                                    <v-tab>
+                                        Condicional
+                                    </v-tab>
+                                    <v-tab>
+                                        Diversidade
+                                    </v-tab>
+                                </v-tabs>
+                            </template>
+                        </v-toolbar>
+
+                        <v-tabs-items v-model="tabs">
+
+                            <v-tab-item>
+                                <v-card flat>
+
+                                    <!--Tabela-->
+                                    <template>
+                                        <v-expansion-panels>
+                                            <v-expansion-panel v-for="(item, i) in 1" :key="i">
+                                                <v-expansion-panel-header>
+                                                    Selecionar Data
+                                                </v-expansion-panel-header>
+                                                <v-expansion-panel-content>
+                                                    <v-row justify="space-between">
+                                                        <div>
+                                                            <v-date-picker v-model="value" :events="arrayEvents"
+                                                                event-color="#0E1566" full-width
+                                                                :landscape="$vuetify.breakpoint.smAndUp" class="mt-4"
+                                                                locale="pt-br" color="#78909C">
+                                                            </v-date-picker>
+                                                        </div>
+                                                    </v-row>
+                                                </v-expansion-panel-content>
+                                            </v-expansion-panel>
+                                        </v-expansion-panels>
+                                        <v-card color="#B0BEC5">
+                                            <v-card-title>
+                                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Search"
+                                                    single-line hide-details></v-text-field>
+                                            </v-card-title>
+                                            <v-data-table :headers="headers" :items="desserts" :search="search" striped>
+
+                                                <template v-slot:[`item.actions`]="{ item }">
+                                                    <Model_I :id="item.hash" />
+
+                                                </template>
+                                                <!--Icones de lupa, lapis e chave-->
+                                                <template v-slot:[`item.action_s`]>
+
+                                                    <b-icon id="icons-action" class="icon-btn" icon="pencil"
+                                                        aria-hidden="true" variant="dark">
+                                                    </b-icon>
+
+                                                    <b-icon id="icons-action" class="icon-btn" icon="wrench"
+                                                        aria-hidden="true" variant="dark">
+                                                    </b-icon>
+                                                </template>
+                                            </v-data-table>
+                                        </v-card>
+                                    </template>
+                                </v-card>
+                            </v-tab-item>
+                            <v-tab-item>
+                                <v-card flat>
+                                    <v-card color="#B0BEC5">
+                                        <Tabela_Inven />
+                                    </v-card>
+                                </v-card>
+                            </v-tab-item>
+                            <v-tab-item>
+                                <v-card flat>
+                                    <Tabela_Inven_D />
+                                </v-card>
+                            </v-tab-item>
+                        </v-tabs-items>
+                    </v-card>
+                </template>
+            </v-banner>
+
+        </v-container>
+
+    </div>
+</template>
+
+<script>
+
+import api from '../services/api';
+import Tabela_Inven from './Tabela_Inven.vue';
+import Tabela_Inven_D from './Tabela_Inven_D.vue';
+import Model_I from './Model_I.vue'
+
+export default {
+    components: { Tabela_Inven, Tabela_Inven_D, Model_I },
+
+    data() {
+        return {
+            search: '',
+            filter: {},
+            cor_data: '',
+            count: 0,
+            headers: [
+                { text: 'Historico', value: "actions", sortable: false },
+                { text: 'Dias Inventariados', value: 'nu_dia_inventariado' },
+                { text: 'Dt. Último Inventario', value: 'dt_ultimo_inventario' },
+                { text: 'Ação', value: "action_s", sortable: false },
+            ],
+            desserts: [],
+            parametroid: this.$route.params.id,
+            arrayEvents: null,
+            value: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+
+
+
+            //Inicio do campo do inventario/Condicional/Diversidade
+            tabs: null,
+            //Fim do campo do inventario/Condicional/Diversidade
+        }
+    },
+    watch: {
+        value: function () {
+            this.getInventario()
+
+        }
+    },
+    methods: {
+        getInventario() {
+            const current = new Date()
+            const month = current.getMonth() < 10 ? `${current.getMonth()}` : current.getMonth();
+            const year = current.getFullYear();
+            const day = current.getDate();
+            const currentDate = `${year}-${month}-${day}`
+
+            const api_defull = `/hub/dados/inventario/${this.parametroid}`
+            const calen_api = this.value ? `${api_defull}/${this.value}/20/1` : `${api_defull}/${currentDate}/20/1`
+
+            api.get(calen_api)
+                .then(response => {
+                    this.desserts = response.data.results.rows
+                    this.count = response.data.count
+                    console.log(this.desserts)
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        getData_Inventario() {
+            api.get(`/hub/dados/frequencia-inventario-datas/${this.parametroid}`)
+                .then(response => {
+                    const resul_cor = response.data.results
+                    this.arrayEvents = resul_cor.map((item) => {
+                        return item.data
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
+
+        },
+
+
+    },
+    mounted() {
+        this.getInventario()
+        this.getData_Inventario()
+
+
+    },
+
+}
+</script>

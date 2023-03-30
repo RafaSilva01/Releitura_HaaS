@@ -1,0 +1,36 @@
+para poder aparecer aquele texto la, tenho que escrever uma condicional if/else
+
+C:\Desenvolvimento\HaaS\develop\cliente-api\api\views\item_configuracao.py
+
+Api que carrega todos os itens de configuracao:
+http://127.0.0.1:8000/api/v1/cliente/item-configuracao
+
+Api que busca informação de um item de configuracao com base no id informado( o 10 e o codigo do id)
+http://127.0.0.1:8000/api/v1/cliente/item-configuracao/buscar/10
+
+
+C:\Desenvolvimento\HaaS\develop\cliente-api\hub\views.py (os dois end-points e nesse aqrquivo [listar inventario,frequencia inven])
+
+Api que carrega as datas de inventario de um determinado item de configuração, com base no id informado.
+http://127.0.0.1:8000/api/v1/hub/dados/frequencia-inventario-datas/10  
+
+
+Api que carrega os itens inventariados, de um deterninado item de configuração()
+http://127.0.0.1:8000/api/v1/hub/dados/inventario/10/2023-01-19/20/1/
+
+Api que carrega a lupinha do item
+http://127.0.0.1:8000/api/v1/hub/dados/item/inventario/historico
+
+
+Api que carrega a chavinha dos icones
+http://127.0.0.1:8000/api/v1/cliente/evento
+
+Api que server para revalidar
+http://127.0.0.1:8002/dispositivos/revalidar/
+--------------------------------------------------------------------
+Trocar esses dois links depois 
+condicional
+http://127.0.0.1:8000/api/v1/cliente/item-configuracao-condicional/10
+
+Diversidade
+http://127.0.0.1:8000/api/v1/cliente/item-configuracao-diversidade/10
