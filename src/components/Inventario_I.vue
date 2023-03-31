@@ -54,8 +54,7 @@
 
                                                 <template v-slot:[`item.historico`]="{ item }">
 
-                                                    <Model_I 
-                                                        :id="item.hash" 
+                                                    <Model_I :id="item.hash"
                                                         :dt_ultimo_inventario="item.dt_ultimo_inventario"
                                                         :nu_dia_inventariado="item.nu_dia_inventariado"
                                                         :classe="classe_d[0]" />
@@ -187,7 +186,6 @@ export default {
         },
     },
     mounted() {
-        //this.getInventario()
         this.getData_Inventario()
     },
 }

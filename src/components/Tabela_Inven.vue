@@ -6,7 +6,7 @@
             </v-card-title>
             <v-card-title color="#B0BEC5">
                 <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
-                    hide-details ></v-text-field>
+                    hide-details></v-text-field>
                 <v-spacer></v-spacer>
                 <v-btn elevation="2" color="#4DF566">
                     <img src="https://cdn-icons-png.flaticon.com/512/1994/1994302.png" width="20">
@@ -32,7 +32,7 @@ export default {
             count: 0,
             headers: [
                 { text: 'Nome da Condicional', value: 'no_condicional' },
-                { text: 'Justificativa', value: 'ds_justificativa' },   
+                { text: 'Justificativa', value: 'ds_justificativa' },
                 { text: 'Aplicar Regra', value: 'bo_aplica_regra' },
                 { text: 'Dt. Inicio da duração da Condicional', value: 'protein' },
                 { text: 'Dt. Termino da duração da Condicional', value: 'iron' },

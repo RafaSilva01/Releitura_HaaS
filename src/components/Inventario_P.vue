@@ -8,18 +8,18 @@
           <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details>
           </v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="desserts" :search="search" >
-          <template v-slot:[`item.actions`]="{item}" >
-            <RouterLink :to="{name:'detalhes', params:{id:item.id}}">
+        <v-data-table :headers="headers" :items="desserts" :search="search">
+          <template v-slot:[`item.actions`]="{ item }">
+            <RouterLink :to="{ name: 'detalhes', params: { id: item.id } }">
               <b-icon id="icons-action" class="icon-btn" icon="eye" aria-hidden="true" variant="dark"></b-icon>
             </RouterLink>
           </template>
-           
-            <template v-slot:[`item.entrada`]="{item}">
-              <v-chip :color="getColor(item.entrada)" dark>
-                  {{ item.entrada }}
-              </v-chip>
-            </template>
+
+          <template v-slot:[`item.entrada`]="{ item }">
+            <v-chip :color="getColor(item.entrada)" dark>
+              {{ item.entrada }}
+            </v-chip>
+          </template>
         </v-data-table>
       </v-card>
     </v-container>
@@ -49,11 +49,11 @@ export default {
         { text: "Situação", value: "bo_ativo" },
         { text: "Ação", value: "actions", sortable: false },
       ],
-      desserts: [], 
-      
+      desserts: [],
+
 
     };
-    
+
   },
   methods: {
     getInventario() {
@@ -87,7 +87,7 @@ export default {
 
             //Editando o campo de regras de combranças
             results[i].tp_regra_cobranca = "Nr. Dias p/Faturar";
-            
+
             //Editando o campo de Entrada
             if (results[i].bo_hibrido === true) {
               results[i].entrada = "Hibrido";
@@ -105,18 +105,18 @@ export default {
           console.log(error);
         });
     },
-    getColor (entrada) {
-        if (entrada === "Hibrido") return 'red'
-        else if (entrada === "Manual") return 'orange'
-        else return 'green'
-      },
+    getColor(entrada) {
+      if (entrada === "Hibrido") return 'red'
+      else if (entrada === "Manual") return 'orange'
+      else return 'green'
+    },
 
   },
   mounted() {
     this.getInventario();
   },
   components: { RouterLink }
-  
+
 }
 
 </script>
