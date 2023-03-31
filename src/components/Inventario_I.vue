@@ -50,19 +50,25 @@
                                                 <v-text-field v-model="search" append-icon="mdi-magnify" label="Search"
                                                     single-line hide-details></v-text-field>
                                             </v-card-title>
-                                            <v-data-table :headers="headers" :items="desserts" :search="search" striped>
+                                            <v-data-table :headers="headers" :items="desserts" :search="search">
 
-                                                <template v-slot:[`item.actions`]="{ item }">
-                                                    <Model_I :id="item.hash" />
+                                                <template v-slot:[`item.historico`]="{ item }">
+
+                                                    <Model_I 
+                                                        :id="item.hash" 
+                                                        :dt_ultimo_inventario="item.dt_ultimo_inventario"
+                                                        :nu_dia_inventariado="item.nu_dia_inventariado"
+                                                        :classe="classe_d[0]" />
 
                                                 </template>
                                                 <!--Icones de lupa, lapis e chave-->
-                                                <template v-slot:[`item.action_s`]>
+                                                <template v-slot:[`item.action`]>
 
                                                     <b-icon id="icons-action" class="icon-btn" icon="pencil"
                                                         aria-hidden="true" variant="dark">
-                                                    </b-icon>
 
+                                                    </b-icon>
+                                                    <v-spacer></v-spacer>
                                                     <b-icon id="icons-action" class="icon-btn" icon="wrench"
                                                         aria-hidden="true" variant="dark">
                                                     </b-icon>
@@ -110,18 +116,12 @@ export default {
             filter: {},
             cor_data: '',
             count: 0,
-            headers: [
-                { text: 'Historico', value: "actions", sortable: false },
-                { text: 'Dias Inventariados', value: 'nu_dia_inventariado' },
-                { text: 'Dt. Último Inventario', value: 'dt_ultimo_inventario' },
-                { text: 'Ação', value: "action_s", sortable: false },
-            ],
+            headers: [],
+            classe_d: [],
             desserts: [],
             parametroid: this.$route.params.id,
             arrayEvents: null,
             value: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-
-
 
             //Inicio do campo do inventario/Condicional/Diversidade
             tabs: null,
@@ -147,9 +147,28 @@ export default {
 
             api.get(calen_api)
                 .then(response => {
-                    this.desserts = response.data.results.rows
+                    this.classe_d = response.data.results.classe
+                    const rows = response.data.results.rows
+                    const arr = response.data.results.columns
+                    const historico = { text: "Historico", value: "historico" }
+                    this.headers.push(historico)
+
+
+                    for (let i = 0; i < arr.length; i++) {
+
+                        const cabecalho = { text: arr[i].ds_titulo, value: arr[i].no_atributo }
+                        this.headers.push(cabecalho)
+
+
+                    }
+                    const acao = { text: "Ação", value: "action" }
+                    console.log(this.headers)
+                    this.headers.push(acao)
+
+                    this.desserts = rows
                     this.count = response.data.count
-                    console.log(this.desserts)
+                    this.statusapi = false
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -165,17 +184,11 @@ export default {
                 }).catch(error => {
                     console.log(error);
                 });
-
         },
-
-
     },
     mounted() {
-        this.getInventario()
+        //this.getInventario()
         this.getData_Inventario()
-
-
     },
-
 }
 </script>

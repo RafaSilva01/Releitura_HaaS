@@ -14,7 +14,7 @@
               <b-icon id="icons-action" class="icon-btn" icon="eye" aria-hidden="true" variant="dark"></b-icon>
             </RouterLink>
           </template>
-            <!-- Falta colocar o quadradinho que envolve o manul/automatico/hibrido -->
+           
             <template v-slot:[`item.entrada`]="{item}">
               <v-chip :color="getColor(item.entrada)" dark>
                   {{ item.entrada }}

@@ -13,7 +13,8 @@
                 </v-card>
                 <template>
                     <div>
-                        <v-data-table :headers="headers" :items="desserts" :hide-default-footer="true">
+                        <v-data-table :headers="headers" :items="desserts" :hide-default-footer="true" >
+                            
                             <template v-slot:[`item.no_classe`]="{ item }">
                                 <v-chip :color="getColor(item.no_classe)" dark>
                                     {{ item.no_classe }}
