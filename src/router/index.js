@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Inventario_P from '../views/Inventario_P.vue'
-import Inventario_D from '../views/Inventario_D.vue'
+import Item_Configuracao from '../views/Item_Configuracao.vue'
+import Item_Config_Detalhe from '../views/Item_Config_Detalhe.vue'
 
 Vue.use(VueRouter)
 
@@ -10,12 +10,12 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Inventario_P
+    component: Item_Configuracao
   },
   {
     path: '/detalhe/:id',
     name: 'detalhes',
-    component: Inventario_D
+    component: Item_Config_Detalhe
   }
 
   

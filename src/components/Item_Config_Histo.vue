@@ -80,13 +80,13 @@
                             <v-tab-item>
                                 <v-card flat>
                                     <v-card color="#B0BEC5">
-                                        <Tabela_Inven />
+                                        <Condicional_Invent />
                                     </v-card>
                                 </v-card>
                             </v-tab-item>
                             <v-tab-item>
                                 <v-card flat>
-                                    <Tabela_Inven_D />
+                                    <Diversidade_Invent />
                                 </v-card>
                             </v-tab-item>
                         </v-tabs-items>
@@ -102,12 +102,13 @@
 <script>
 
 import api from '../services/api';
-import Tabela_Inven from './Tabela_Inven.vue';
-import Tabela_Inven_D from './Tabela_Inven_D.vue';
+
+import Diversidade_Invent from './Diversidade_Invent.vue';
 import Model_I from './Model_I.vue'
+import Condicional_Invent from './Condicional_Invent.vue';
 
 export default {
-    components: { Tabela_Inven, Tabela_Inven_D, Model_I },
+    components: {Diversidade_Invent, Model_I, Condicional_Invent },
 
     data() {
         return {

@@ -1,4 +1,3 @@
-
 <template>
   <v-footer padless color="blue lighten-1">
 

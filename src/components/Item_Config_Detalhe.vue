@@ -111,14 +111,10 @@ export default {
             else if (no_classe === "Manual") return 'orange'
             else return 'green'
         },
-
     },
-
-
     mounted() {
         this.getInventario()
         //console.log(this.parametroid)
     }
-
 }
 </script>

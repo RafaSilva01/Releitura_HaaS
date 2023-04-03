@@ -50,8 +50,6 @@ export default {
         { text: "Ação", value: "actions", sortable: false },
       ],
       desserts: [],
-
-
     };
 
   },
